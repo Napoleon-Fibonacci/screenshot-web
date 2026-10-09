@@ -1,0 +1,431 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f0f3f8;
+  --band: #e1e9f3;
+  --ink: #0e1c2e;
+  --ink-soft: #52647c;
+  --rule: rgba(14, 28, 46, 0.22);
+  --grid-line: rgba(14, 28, 46, 0.09);
+  --card: #fbfdff;
+  --blue: #1a56b0;
+  --scope: #0e9cc0;
+  --signal: #ffd23f;
+  --danger: #b3261e;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-band: var(--band);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-card: var(--card);
+  --color-blue: var(--blue);
+  --color-scope: var(--scope);
+  --color-signal: var(--signal);
+  --color-danger: var(--danger);
+  --color-rule: var(--rule);
+  --font-sans: var(--font-atkinson);
+  --font-display: var(--font-chakra);
+}
+
+:root {
+  --ease-spring: cubic-bezier(0.19, 1, 0.32, 1);
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-atkinson), system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-chakra), system-ui, sans-serif;
+  line-height: 1.2;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.paper-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.panel-frame {
+  position: relative;
+  border: 1px solid var(--rule);
+  background-color: var(--band);
+}
+
+.panel-frame::before,
+.panel-frame::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+}
+
+.panel-frame::before {
+  top: -2px;
+  left: -2px;
+  border-top: 3px solid var(--blue);
+  border-left: 3px solid var(--blue);
+}
+
+.panel-frame::after {
+  right: -2px;
+  bottom: -2px;
+  border-right: 3px solid var(--blue);
+  border-bottom: 3px solid var(--blue);
+}
+
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--signal);
+  color: #0e1c2e;
+  border: 1px solid #0e1c2e;
+  box-shadow: 3px 3px 0 var(--blue);
+  font-family: var(--font-chakra), system-ui, sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-out), opacity 0.3s ease;
+}
+
+/* Kilau menyapu saat hover — sensasi yang sama dengan thumb segmented */
+.btn-solid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(110deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-140%) skewX(-12deg);
+  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.btn-solid:hover:not(:disabled)::after {
+  transform: translateX(320%);
+}
+
+.btn-solid:hover:not(:disabled) {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1.5px 1.5px 0 var(--blue);
+}
+
+.btn-solid:active:not(:disabled) {
+  transform: translate(3px, 3px) scale(0.985);
+  box-shadow: 0 0 0 var(--blue);
+}
+
+/* Lift halus saat navigasi keyboard — motion juga untuk tab */
+.btn-solid:focus-visible,
+.btn-ghost:focus-visible {
+  transform: translateY(-2px);
+}
+
+.btn-solid:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-solid:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  font-family: var(--font-chakra), system-ui, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.22s var(--ease-out),
+    border-color 0.22s var(--ease-out),
+    transform 0.22s var(--ease-spring);
+}
+
+.btn-ghost::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(110deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  transform: translateX(-140%) skewX(-12deg);
+  transition: transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.btn-ghost:hover::after {
+  transform: translateX(320%);
+}
+
+.btn-ghost:hover {
+  transform: translateY(-1px);
+  border-color: var(--blue);
+  background: var(--band);
+}
+
+.btn-ghost:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+  background: var(--band);
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(14, 28, 46, 0.06) 25%,
+    rgba(14, 28, 46, 0.13) 37%,
+    rgba(14, 28, 46, 0.06) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  animation: fade 0.45s ease both;
+}
+
+/* Reveal per kata — gaya motion graphic */
+@keyframes word-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.85em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-word {
+  display: inline-block;
+  animation: word-rise 0.65s var(--ease-out) both;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  70% {
+    transform: scale(1.07);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pop {
+  animation: pop 0.5s var(--ease-out) both;
+}
+
+/* Scanline lembut menyapu area preview */
+.scan-sweep::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 64px;
+  background: linear-gradient(180deg, transparent, rgba(26, 86, 176, 0.1), transparent);
+  animation: scan 7s var(--ease-out) infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-120%);
+  }
+  60%,
+  100% {
+    transform: translateY(900%);
+  }
+}
+
+.animate-fade {
+  animation: fade 0.45s ease both;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Centang: gambar garis + kotak memantul + denyut ring */
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-check {
+  animation: check-draw 0.4s var(--ease-out) 0.08s both;
+}
+
+@keyframes box-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-check-box {
+  animation: box-pop 0.35s var(--ease-out);
+}
+
+.check-burst::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--blue);
+  border-radius: 2px;
+  animation: burst 0.5s var(--ease-out);
+  pointer-events: none;
+}
+
+@keyframes burst {
+  from {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-rise,
+  .animate-fade,
+  .animate-float,
+  .animate-word,
+  .animate-pop,
+  .animate-check,
+  .animate-check-box,
+  .skeleton,
+  .scan-sweep::before {
+    animation: none;
+  }
+
+  .check-burst::after,
+  .scan-sweep::before {
+    display: none;
+  }
+
+  .btn-solid,
+  .btn-ghost {
+    transition: none;
+  }
+
+  .btn-solid::after,
+  .btn-ghost::after {
+    display: none;
+  }
+
+  .btn-solid:hover:not(:disabled),
+  .btn-solid:active:not(:disabled),
+  .btn-ghost:hover,
+  .btn-ghost:active {
+    transform: none;
+  }
+}
